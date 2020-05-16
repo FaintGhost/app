@@ -1,17 +1,5 @@
 version: "3"
 services:
-  
-  portainer:
-    image: portainer/portainer
-    container_name: portainer
-    restart: always
-    network_mode: host
-    # 9000:9000 8000:8000
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer/data:/data
-    environment: 
-      - TZ=Europe/Berlin
 
   nginxproxymanager:
     image: jc21/nginx-proxy-manager:latest
@@ -38,7 +26,19 @@ services:
       MYSQL_USER: "npm"
       MYSQL_PASSWORD: "npm"
     volumes:
-      - ./nginxproxymanager/data/mysql:/var/lib/mysql
+      - ./nginxproxymanager/data/mysql:/var/lib/mysql  
+
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    restart: always
+    network_mode: host
+    # 9000:9000 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer/data:/data
+    environment: 
+      - TZ=Europe/Berlin
 
   adguardhome:
     image: adguard/adguardhome:armhf-latest
