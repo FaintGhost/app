@@ -5,10 +5,8 @@ services:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginxproxymanager
     restart: always
-    ports:
-      - 80:80
-      - 443:443
-      - 81:81
+    network_mode: host
+    # 80:80 81:81 443:443
     volumes:
       # Make sure this config.json file exists as per instructions above:
       - ./nginxproxymanager/config.json:/app/config/production.json
@@ -46,10 +44,9 @@ services:
     container_name: nodered
     restart: always
     network_mode: host
+    # 1880:1880
     volumes:
-      - ./nodered/data:/data
-    ports:
-      - 1880:1880
+      - ./nodered/.node-red:/data
     environment: 
       - TZ=Europe/Berlin
 
@@ -58,6 +55,7 @@ services:
     container_name: homebridge
     restart: always
     network_mode: host
+    # 8080:8080
     volumes:
       - ./homebridge/config:/homebridge
     environment:
