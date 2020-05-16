@@ -47,7 +47,7 @@ services:
     restart: always
     network_mode: host
     volumes:
-      - ./data:/data
+      - ./nodered/data:/data
     ports:
       - 1880:1880
     environment: 
