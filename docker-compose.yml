@@ -1,0 +1,68 @@
+version: "3"
+services:
+
+  nginxproxymanager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginxproxymanager
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - 81:81
+    volumes:
+      # Make sure this config.json file exists as per instructions above:
+      - ./nginxproxymanager/config.json:/app/config/production.json
+      - ./nginxproxymanager/data:/data
+      - ./nginxproxymanager/letsencrypt:/etc/letsencrypt
+    environment:
+      - TZ=Europe/Berlin
+    depends_on:
+      - db
+  db:
+    image: faintghost/rpi-mariadb-aria:armhf
+    container_name: rpi-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "npm"
+      MYSQL_DATABASE: "npm"
+      MYSQL_USER: "npm"
+      MYSQL_PASSWORD: "npm"
+    volumes:
+      - ./nginxproxymanager/data/mysql:/var/lib/mysql
+
+  adguardhome:
+    image: adguard/adguardhome:armhf-latest
+    container_name: adguardhome
+    restart: always
+    network_mode: host
+    volumes:
+      - ./adguardhome/work:/opt/adguardhome/work
+      - ./adguardhome/conf:/opt/adguardhome/conf
+    environment: 
+      - TZ=Europe/Berlin
+
+  nodered:
+    image: nodered/node-red
+    container_name: nodered
+    restart: always
+    network_mode: host
+    volumes:
+      - ./data:/data
+    ports:
+      - 1880:1880
+    environment: 
+      - TZ=Europe/Berlin
+
+  homebridge:
+    image: oznu/homebridge:latest
+    container_name: homebridge
+    restart: always
+    network_mode: host
+    volumes:
+      - ./homebridge/config:/homebridge
+    environment:
+      - TZ=Europe/Berlin
+      - PGID=0
+      - PUID=0
+      - HOMEBRIDGE_CONFIG_UI=1
+      - HOMEBRIDGE_CONFIG_UI_PORT=8080
