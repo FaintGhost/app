@@ -49,6 +49,8 @@ services:
       - ./nodered/.node-red:/data
     environment: 
       - TZ=Europe/Berlin
+      - PGID=0
+      - PUID=0
 
   homebridge:
     image: oznu/homebridge:latest
