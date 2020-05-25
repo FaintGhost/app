@@ -2,26 +2,6 @@
 
 DEPLOY_PATH=`pwd`
 
-choose(){
-    echo -e "请输入你的选择: \n"
-    until
-    echo "1.开始部署"
-    echo "2.停止部署"
-    echo -e "3.退出脚本 \n"
-    read input
-    test $input = 6
-    do
-        case $input in
-            1) deploy
-            break;;
-            2) stop
-            break;;
-            3)
-            break;;
-        esac
-    done
-}
-
 checkRoot(){
     if [ $(id -u) != "0" ]; then
         echo "ROOT用户 [x]"
@@ -58,39 +38,9 @@ deploy_homebridge(){
 
 deploy_nodered(){
     echo -e "开始部署NodeRED"
-    sudo chown -R 1000:1000 $DEPLOY_PATH/nodered/data
+    sudo chown -R 1000:1000 $DEPLOY_PATH/nodered
     cd $DEPLOY_PATH/nodered
     docker-compose up -d
-}
-
-down_portainer(){
-    echo -e "正在停止Portainer"
-    cd $DEPLOY_PATH/portainer
-    docker-compose down
-}
-
-down_nginx(){
-    echo -e "正在停止Nginx Proxy Manager"
-    cd $DEPLOY_PATH/nginxproxymanager
-    docker-compose down
-}
-
-down_adguardhome(){
-    echo -e "正在停止AdGuardHome"
-    cd $DEPLOY_PATH/adguardhome
-    docker-compose down
-}
-
-down_homebridge(){
-    echo -e "正在停止HomeBridge"
-    cd $DEPLOY_PATH/homebridge
-    docker-compose down
-}
-
-down_nodered(){
-    echo -e "正在停止NodeRED"
-    cd $DEPLOY_PATH/nodered
-    docker-compose down
 }
 
 deploy(){
@@ -109,20 +59,4 @@ deploy(){
     echo "----------------------------------------"
 }
 
-stop(){
-    echo "----------------------------------------"
-    checkRoot
-    echo "----------------------------------------"
-    down_portainer
-    echo "----------------------------------------"
-    down_nginx
-    echo "----------------------------------------"
-    down_homebridge
-    echo "----------------------------------------"
-    down_adguardhome
-    echo "----------------------------------------"
-    down_nodered
-    echo "----------------------------------------"
-}
-
-choose
+deploy

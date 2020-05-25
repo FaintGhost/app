@@ -2,7 +2,7 @@ version: "3"
 services:
 
   adguardhome:
-    image: adguard/adguardhome:armhf-latest
+    image: adguard/adguardhome
     container_name: adguardhome
     restart: always
     network_mode: host
