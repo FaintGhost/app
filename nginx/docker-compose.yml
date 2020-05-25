@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
   db:
-    image: faintghost/rpi-mariadb-aria:armhf
+    image: jc21/mariadb-aria:10.4
     container_name: rpi-mariadb
     restart: always
     environment:
