@@ -20,12 +20,21 @@ deploy_portainer(){
 
 deploy_nginx(){
     echo -e "开始部署Nginx Proxy Manager"
-    cd $DEPLOY_PATH/nginxproxymanager
+    cd $DEPLOY_PATH/nginx
     docker-compose up -d
 }
 
 deploy_adguardhome(){
     echo -e "开始部署AdGuardHome"
+    mkdir /etc/systemd/resolved.conf.d
+    cat > /etc/systemd/resolved.conf.d/a.txt << EOF
+    [Resolve]
+    DNS=127.0.0.1
+    DNSStubListener=no
+EOF
+    mv /etc/resolv.conf /etc/resolv.conf.backup
+    ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    systemctl restart systemd-resolved
     cd $DEPLOY_PATH/adguardhome
     docker-compose up -d
 }
@@ -43,6 +52,20 @@ deploy_nodered(){
     docker-compose up -d
 }
 
+deploy_ttrss(){
+    echo -e "开始部署Tiny Tiny RSS"
+    cd $DEPLOY_PATH/ttrss
+    docker-compose up -d
+}
+
+install_ha(){
+    cd ~
+    apt-get install software-properties-common
+    apt-get update
+    apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
+    curl -sL https://raw.githubusercontent.com/FaintGhost/supervised-installer/master/installer.sh | bash -s -- -m intel-nuc
+}
+
 deploy(){
     echo "----------------------------------------"
     checkRoot
@@ -51,11 +74,15 @@ deploy(){
     echo "----------------------------------------"
     deploy_nginx
     echo "----------------------------------------"
-    deploy_homebridge
-    echo "----------------------------------------"
-    deploy_adguardhome
+    install_ha
     echo "----------------------------------------"
     deploy_nodered
+    echo "----------------------------------------"
+    deploy_homebridge
+    echo "----------------------------------------"
+    # deploy_adguardhome
+    # echo "----------------------------------------"
+    deploy_ttrss
     echo "----------------------------------------"
 }
 
