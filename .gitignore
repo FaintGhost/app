@@ -1,0 +1,9 @@
+nginx/data/*
+homebridge/config/*
+adguardhome/conf/*
+adguardhome/work/*
+nodered/data/*
+portainer/data/*
+transmission/config/*
+transmission/watch/*
+ttrss/postgres/*

@@ -1,0 +1,16 @@
+version: "3"
+services:
+  aria2:
+    image: faintghost/aria2-ariang-ui:latest
+    container_name: aria2
+    restart: always
+    ports:
+      - 6800:6800
+      - 6801:6801
+      - 6888:6888
+      - 6888:6888/udp
+    volumes:
+      - ./config:/config
+      - /mnt/downloads:/downloads
+    environment:
+      - RPC_SECRET=009812

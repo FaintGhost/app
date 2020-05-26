@@ -1,0 +1,14 @@
+version: '3'
+services:
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    restart: always
+    network_mode: host
+    volumes:
+      - ./config:/config
+      - ./cache:/cache
+      - /mnt/video/Library:/media
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
