@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DEPLOY_PATH=`pwd`
+DEPLOY_PATH=$(pwd)
 
-checkRoot(){
+checkRoot() {
     if [ $(id -u) != "0" ]; then
         echo "ROOT用户 [x]"
         echo "请使用ROOT用户执行本脚本！"
@@ -12,7 +12,12 @@ checkRoot(){
     echo "执行脚本!"
 }
 
-install_docker(){
+install_rclone() {
+    sudo apt-get install unzip fuse -y
+    curl https://rclone.org/install.sh | sudo bash
+}
+
+install_docker() {
     sudo apt-get update -y
     sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
@@ -21,22 +26,22 @@ install_docker(){
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose -y
 }
 
-deploy_portainer(){
+deploy_portainer() {
     echo -e "开始部署Portainer"
     cd $DEPLOY_PATH/portainer
     docker-compose up -d
 }
 
-deploy_nginx(){
+deploy_nginx() {
     echo -e "开始部署Nginx Proxy Manager"
     cd $DEPLOY_PATH/nginx
     docker-compose up -d
 }
 
-deploy_adguardhome(){
+deploy_adguardhome() {
     echo -e "开始部署AdGuardHome"
     mkdir /etc/systemd/resolved.conf.d
-    cat > /etc/systemd/resolved.conf.d/a.txt << EOF
+    cat >/etc/systemd/resolved.conf.d/a.txt <<EOF
     [Resolve]
     DNS=127.0.0.1
     DNSStubListener=no
@@ -48,26 +53,26 @@ EOF
     docker-compose up -d
 }
 
-deploy_homebridge(){
+deploy_homebridge() {
     echo -e "开始部署HomeBridge"
     cd $DEPLOY_PATH/homebridge
     docker-compose up -d
 }
 
-deploy_nodered(){
+deploy_nodered() {
     echo -e "开始部署NodeRED"
     sudo chown -R 1000:1000 $DEPLOY_PATH/nodered
     cd $DEPLOY_PATH/nodered
     docker-compose up -d
 }
 
-deploy_ttrss(){
+deploy_ttrss() {
     echo -e "开始部署Tiny Tiny RSS"
     cd $DEPLOY_PATH/ttrss
     docker-compose up -d
 }
 
-install_ha(){
+install_ha() {
     cd ~
     apt-get install software-properties-common
     apt-get update
@@ -75,7 +80,7 @@ install_ha(){
     curl -sL https://raw.githubusercontent.com/FaintGhost/supervised-installer/master/installer.sh | bash -s -- -m intel-nuc
 }
 
-deploy(){
+deploy() {
     echo "----------------------------------------"
     checkRoot
     echo "----------------------------------------"
