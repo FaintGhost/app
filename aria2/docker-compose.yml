@@ -6,7 +6,7 @@ services:
     restart: always
     ports:
       - 6800:6800
-      - 6801:6801
+      - 6801:80
       - 6888:6888
       - 6888:6888/udp
     volumes:
