@@ -19,7 +19,7 @@ install_rclone() {
 
 install_docker() {
     sudo apt-get update -y
-    sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
+    sudo apt-get install apt-transport-https wget ca-certificates curl gnupg-agent software-properties-common -y
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
     sudo apt-get update -y
@@ -40,22 +40,7 @@ deploy_nginx() {
 
 deploy_adguardhome() {
     echo -e "开始部署AdGuardHome"
-    mkdir /etc/systemd/resolved.conf.d
-    cat >/etc/systemd/resolved.conf.d/a.txt <<EOF
-    [Resolve]
-    DNS=127.0.0.1
-    DNSStubListener=no
-EOF
-    mv /etc/resolv.conf /etc/resolv.conf.backup
-    ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
-    systemctl restart systemd-resolved
     cd $DEPLOY_PATH/adguardhome
-    docker-compose up -d
-}
-
-deploy_homebridge() {
-    echo -e "开始部署HomeBridge"
-    cd $DEPLOY_PATH/homebridge
     docker-compose up -d
 }
 
@@ -75,14 +60,22 @@ deploy_ttrss() {
 install_ha() {
     cd ~
     apt-get install software-properties-common
-    apt-get update
+    apt-get update -y
     apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
     curl -sL https://raw.githubusercontent.com/FaintGhost/supervised-installer/master/installer.sh | bash -s -- -m intel-nuc
+}
+
+deploy_watchtower() {
+    echo -e "开始部署Watchtower"
+    cd $DEPLOY_PATH/watchtower
+    docker-compose up -d
 }
 
 deploy() {
     echo "----------------------------------------"
     checkRoot
+    deploy_adguardhome
+    echo "----------------------------------------"
     echo "----------------------------------------"
     deploy_portainer
     echo "----------------------------------------"
@@ -92,12 +85,9 @@ deploy() {
     echo "----------------------------------------"
     deploy_nodered
     echo "----------------------------------------"
-    deploy_homebridge
-    echo "----------------------------------------"
-    # deploy_adguardhome
-    # echo "----------------------------------------"
     deploy_ttrss
     echo "----------------------------------------"
+    deploy_watchtower
 }
 
 deploy
