@@ -10,13 +10,17 @@ services:
     environment:
       - TZ=Europe/Berlin
     command:
-      - ttrss
-      - nodered
-      - nginxproxymanager
-      - npc
-      - portainer
-      - UnblockNeteaseMusic
-      - mercury
-      - postgres
-      - opencc
-      - adguardhome
+      [
+        "--interval",
+        "30",
+        "ttrss",
+        "nodered",
+        "nginxproxymanager",
+        "portainer",
+        "unlockmusic",
+        "mercury",
+        "postgres",
+        "opencc",
+        "adguardhome",
+        "jellyfin",
+      ]

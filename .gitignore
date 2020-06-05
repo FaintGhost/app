@@ -2,7 +2,7 @@ nginx/data/*
 homebridge/config/*
 adguardhome/conf/*
 adguardhome/work/*
-nodered/data/*
+nodered/
 portainer/data/*
 transmission/config/*
 transmission/watch/*
