@@ -26,6 +26,14 @@ install_docker() {
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose -y
 }
 
+# install_ha() {
+#     cd ~
+#     apt-get install software-properties-common -y
+#     apt-get update -y
+#     apt-get install apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat -y
+#     curl -sL https://raw.githubusercontent.com/FaintGhost/supervised-installer/master/installer.sh | bash -s -- -m intel-nuc
+# }
+
 deploy_portainer() {
     echo -e "开始部署Portainer"
     docker-compose -f $DEPLOY_PATH/portainer/docker-compose.yml up -d
@@ -48,6 +56,11 @@ deploy_nodered() {
     docker-compose -f $DEPLOY_PATH/nodered/docker-compose.yml up -d
 }
 
+deploy_unlockmusic(){
+    echo -e "开始部署UnblockNeteaseMusic"
+    docker-compose -f $DEPLOY_PATH/unlockmusic/docker-compose.yml up -d
+}
+
 deploy_ttrss() {
     echo -e "开始部署Tiny Tiny RSS"
     docker-compose -f $DEPLOY_PATH/ttrss/docker-compose.yml up -d
@@ -56,14 +69,6 @@ deploy_ttrss() {
 deploy_watchtower() {
     echo -e "开始部署Watchtower"
     docker-compose -f $DEPLOY_PATH/watchtower/docker-compose.yml up -d
-}
-
-install_ha() {
-    cd ~
-    apt-get install software-properties-common -y
-    apt-get update -y
-    apt-get install apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat -y
-    curl -sL https://raw.githubusercontent.com/FaintGhost/supervised-installer/master/installer.sh | bash -s -- -m intel-nuc
 }
 
 deploy() {
@@ -75,8 +80,10 @@ deploy() {
     echo "----------------------------------------"
     deploy_nginx
     echo "----------------------------------------"
-    install_ha
+    deploy_unlockmusic
     echo "----------------------------------------"
+    # install_ha
+    # echo "----------------------------------------"
     deploy_nodered
     echo "----------------------------------------"
     deploy_ttrss
