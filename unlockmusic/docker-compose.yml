@@ -8,3 +8,5 @@ services:
       - 9966:8080
     environment: 
       - TZ=Europe/Berlin
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

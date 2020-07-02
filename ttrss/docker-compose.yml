@@ -3,15 +3,18 @@ services:
   database.postgres:
     image: postgres:alpine
     container_name: postgres
+    restart: always
     environment:
       - POSTGRES_PASSWORD=ttrss
     volumes:
       - ./postgres/data/:/var/lib/postgresql/data
-    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   service.rss:
     image: wangqiru/ttrss:latest
     container_name: ttrss
+    restart: always
     ports:
       - 9887:80
     environment:
@@ -25,21 +28,26 @@ services:
       - FEED_LOG_QUIET=true
     stdin_open: true
     tty: true
-    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
     command: sh -c 'sh /wait-for.sh $$DB_HOST:$$DB_PORT -- php /configure-db.php && exec s6-svscan /etc/s6/'
 
   service.mercury: # service.mercury:3000
     image: wangqiru/mercury-parser-api:latest
     container_name: mercury
+    restart: always
     expose:
       - 3000
-    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   service.opencc: # service.opencc:3000
     image: wangqiru/opencc-api-server:latest
     container_name: opencc
+    restart: always
     environment:
       - NODE_ENV=production
     expose:
       - 3000
-    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

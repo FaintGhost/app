@@ -11,3 +11,5 @@ services:
       - ./data:/data
     environment: 
       - TZ=Europe/Berlin
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

@@ -15,6 +15,8 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     environment:
       - TZ=Europe/Berlin
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
     depends_on:
       - db
   db:
@@ -28,3 +30,5 @@ services:
       MYSQL_PASSWORD: "npm"
     volumes:
       - ./data/mysql:/var/lib/mysql
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

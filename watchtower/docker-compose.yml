@@ -11,16 +11,8 @@ services:
       - TZ=Europe/Berlin
     command:
       [
-        "--interval",
+        "-i",
         "30",
-        "ttrss",
-        "nodered",
-        "nginxproxymanager",
-        "portainer",
-        "unlockmusic",
-        "mercury",
-        "postgres",
-        "opencc",
-        "adguardhome",
-        "jellyfin",
+        "--cleanup",
+        "--label-enable"
       ]

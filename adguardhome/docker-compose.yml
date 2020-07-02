@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   adguardhome:
     image: adguard/adguardhome
     container_name: adguardhome
@@ -8,5 +9,7 @@ services:
     volumes:
       - ./work:/opt/adguardhome/work
       - ./conf:/opt/adguardhome/conf
-    environment:
+    environment: 
       - TZ=Europe/Berlin
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
