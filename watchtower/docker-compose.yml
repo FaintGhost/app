@@ -12,3 +12,5 @@ services:
       - WATCHTOWER_POLL_INTERVAL=30
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_LABEL_ENABLE=true
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
