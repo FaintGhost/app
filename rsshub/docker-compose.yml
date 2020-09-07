@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   rsshub:
@@ -6,17 +6,17 @@ services:
     container_name: rsshub
     restart: always
     ports:
-        - '1200:1200'
+      - "1200:1200"
     environment:
       NODE_ENV: production
       CACHE_TYPE: redis
-      REDIS_URL: 'redis://redis:6379/'
-      PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000'
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
+      REDIS_URL: "redis://redis:6379/"
+      PUPPETEER_WS_ENDPOINT: "ws://browserless:3000"
     depends_on:
       - redis
       - browserless
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   browserless:
     image: browserless/chrome

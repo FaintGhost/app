@@ -24,7 +24,7 @@ services:
       - DB_NAME=ttrss
       - DB_USER=postgres
       - DB_PASS=ttrss
-      - ENABLE_PLUGINS=auth_internal,fever
+      - ENABLE_PLUGINS=auth_internal,fever,mercury_fulltext,opencc
       - FEED_LOG_QUIET=true
     stdin_open: true
     tty: true

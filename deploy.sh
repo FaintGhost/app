@@ -56,9 +56,14 @@ deploy_nodered() {
     docker-compose -f $DEPLOY_PATH/nodered/docker-compose.yml up -d
 }
 
-deploy_unlockmusic(){
+deploy_unlockmusic() {
     echo -e "开始部署UnblockNeteaseMusic"
     docker-compose -f $DEPLOY_PATH/unlockmusic/docker-compose.yml up -d
+}
+
+deploy_rsshub() {
+    echo -e "开始部署RSSHub"
+    docker-compose -f $DEPLOY_PATH/rsshub/docker-compose.yml up -d
 }
 
 deploy_ttrss() {
@@ -85,6 +90,8 @@ deploy() {
     # install_ha
     # echo "----------------------------------------"
     deploy_nodered
+    echo "----------------------------------------"
+    deploy_rsshub
     echo "----------------------------------------"
     deploy_ttrss
     echo "----------------------------------------"

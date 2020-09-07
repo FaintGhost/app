@@ -21,7 +21,7 @@ services:
       - db
   db:
     image: jc21/mariadb-aria:10.4
-    container_name: rpi-mariadb
+    container_name: mariadb_aria
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "npm"
