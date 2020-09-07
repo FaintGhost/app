@@ -1,0 +1,18 @@
+version: "3"
+services:
+  jellyfin:
+    image: jellyfin/jellylfin
+    container_name: jellyfin
+    network_mode: host
+    restart: always
+    volumes:
+      - ./config:/config
+      - ./cache:/cache
+      - /mnt/video:/media:ro
+      - /mnt/video/Fonts:/usr/share/fonts
+    environment:
+      - TZ=Europe/Berlin
+    devices:
+      - /dev/dri:/dev/dri
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
