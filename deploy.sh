@@ -31,7 +31,7 @@ install_ha() {
     apt-get install software-properties-common -y
     apt-get update -y
     apt-get install apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat -y
-    curl -sL https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh | bash -s -- -m MY_MACHINE
+    curl -sL https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh | bash -s -- -m intel-nuc
 }
 
 deploy_portainer() {
