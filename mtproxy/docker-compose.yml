@@ -1,0 +1,14 @@
+version: "3"
+services:
+  mtproxy:
+    image: telegrammessenger/proxy
+    container_name: mtproxy
+    restart: always
+    ports:
+      - 8453:443
+    volumes:
+      - ./config:/data
+    environment:
+      - TZ=Europe/Berlin
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

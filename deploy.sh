@@ -14,7 +14,7 @@ checkRoot() {
 
 install_essentials() {
     sudo apt update -y
-    sudo apt install apt-transport-https wget ca-certificates curl gnupg-agent software-properties-common apparmor-utils avahi-daemon ca-certificates dbus jq network-manager socat cifs-utils smbclient unzip fuse -y
+    sudo apt install git apt-transport-https wget ca-certificates curl gnupg-agent software-properties-common apparmor-utils avahi-daemon ca-certificates dbus jq network-manager socat cifs-utils smbclient unzip fuse -y
 }
 
 install_rclone() {
