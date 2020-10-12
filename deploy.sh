@@ -12,25 +12,25 @@ checkRoot() {
     echo "执行脚本!"
 }
 
+install_essentials() {
+    sudo apt update -y
+    sudo apt install apt-transport-https wget ca-certificates curl gnupg-agent software-properties-common apparmor-utils avahi-daemon ca-certificates dbus jq network-manager socat cifs-utils smbclient unzip fuse -y
+}
+
 install_rclone() {
-    sudo apt-get install unzip fuse -y
     curl https://rclone.org/install.sh | sudo bash
 }
 
 install_docker() {
-    sudo apt-get update -y
-    sudo apt-get install apt-transport-https wget ca-certificates curl gnupg-agent software-properties-common -y
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-    sudo apt-get update -y
-    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose -y
+    sudo apt update -y
+    sudo apt install docker-ce docker-ce-cli containerd.io docker-compose -y
 }
 
 install_ha() {
     cd ~
-    apt-get install software-properties-common -y
-    apt-get update -y
-    apt-get install apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat -y
+    apt update -y
     curl -sL https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh | bash -s -- -m intel-nuc
 }
 
