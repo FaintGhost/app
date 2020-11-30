@@ -12,5 +12,7 @@ services:
       - WATCHTOWER_POLL_INTERVAL=30
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=telegram://<token>@telegram/?channels=<channels-id>
     labels:
       - com.centurylinklabs.watchtower.enable=true

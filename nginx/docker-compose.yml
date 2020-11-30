@@ -17,18 +17,3 @@ services:
       - TZ=Europe/Berlin
     labels:
       - com.centurylinklabs.watchtower.enable=true
-    depends_on:
-      - db
-  db:
-    image: jc21/mariadb-aria:10.4
-    container_name: mariadb_aria
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: "npm"
-      MYSQL_DATABASE: "npm"
-      MYSQL_USER: "npm"
-      MYSQL_PASSWORD: "npm"
-    volumes:
-      - ./data/mysql:/var/lib/mysql
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
