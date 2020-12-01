@@ -6,3 +6,4 @@
 !install_docker.sh
 !nginx/config.json
 !.gitkeep
+!tele-aria2/docker-compose.yml
