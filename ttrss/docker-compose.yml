@@ -10,8 +10,8 @@ services:
       - SELF_URL_PATH=https://rss.awyun.top/ # please change to your own domain
       - DB_PASS=ttrss
       - ENABLE_PLUGINS=auth_internal,fever,mercury_fulltext,opencc
-      - SINGLE_USER_MODE=false
-      - FEED_LOG_QUIET=true
+    volumes:
+      - feed-icons:/var/www/feed-icons/
     networks:
       - public_access
       - service_only
@@ -26,6 +26,7 @@ services:
     container_name: mercury
     restart: always
     networks:
+      - public_access
       - service_only
     labels:
       - com.centurylinklabs.watchtower.enable=true
@@ -39,7 +40,7 @@ services:
     networks:
       - service_only
     labels:
-      - com.centurylinklabs.watchtower.enable=true      
+      - com.centurylinklabs.watchtower.enable=true
 
   database.postgres:
     image: postgres:13-alpine
@@ -53,6 +54,9 @@ services:
       - database_only
     labels:
       - com.centurylinklabs.watchtower.enable=true
+
+volumes:
+  feed-icons:
 
 networks:
   public_access: # Provide the access for ttrss UI
