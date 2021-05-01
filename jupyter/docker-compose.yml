@@ -1,0 +1,16 @@
+version: "3"
+services:
+  jupyter_datascience:
+    image: jupyter/datascience-notebook:latest
+    container_name: jupyter
+    restart: always
+    ports:
+      - "8883:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - TZ=Europe/Berlin
+    volumes:
+      - ./jupyter:/home/jovyan/.jupyter
+      - ./work:/home/jovyan/work
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

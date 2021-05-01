@@ -1,0 +1,15 @@
+version: "3"
+services:
+  shadowsocks:
+    image: teddysun/shadowsocks-libev
+    container_name: shadowsocks
+    restart: always
+    ports:
+      - 9090:9090
+      - 9090:9090/udp
+    volumes:
+      - ./config:/etc/shadowsocks-libev
+    environment:
+      - TZ=Europe/Berlin
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

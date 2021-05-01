@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  caddy:
+    image: faintghost/caddy2_cf-dns
+    container_name: caddy2
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./site:/srv
+      - ./data:/data
+      - ./config:/config
+    environment:
+      - TZ=Europe/Berlin

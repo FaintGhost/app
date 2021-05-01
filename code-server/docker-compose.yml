@@ -1,0 +1,16 @@
+version: "3"
+services:
+  code_server:
+    image: faintghost/code-server-gcc:latest
+    container_name: code-server
+    restart: always
+    ports:
+      - "8082:8080"
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - ./config:/home/coder/.config # for the config files
+      - ./project:/home/coder/project # for the project files
+      - ./share:/home/coder/.local # for the plugins persistent
+    labels:
+      - com.centurylinklabs.watchtower.enable=true

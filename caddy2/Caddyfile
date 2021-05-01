@@ -1,0 +1,12 @@
+{
+    email example@mail.com
+    acme_dns cloudflare {apikey}
+}
+
+example.site.com {
+    reverse_proxy https://192.168.1.90:5001 {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
+}
