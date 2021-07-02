@@ -10,10 +10,8 @@ install_rclone() {
 }
 
 install_docker() {
-    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-    sudo apt update -y
-    sudo apt install docker-ce docker-ce-cli containerd.io docker-compose -y
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
 }
 
 install_essentials

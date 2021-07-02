@@ -1,0 +1,78 @@
+version: '3'
+services:
+  service.jackett:
+    image: ghcr.io/linuxserver/jackett:latest
+    container_name: jackett
+    restart: always
+    ports:
+      - 9117:9117
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Berlin
+      - AUTO_UPDATE=true
+    volumes:
+      - ./jackett_config:/config
+    depends_on:
+      - service.flaresolverr
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  service.sonarr:
+    image: ghcr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: always
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Berlin
+    volumes:
+      - ./sonarr_config:/config
+      - /mnt/media/downloads:/downloads
+      - /mnt/media/anime:/anime
+      - /mnt/media/tv:/tv
+      - /mnt/media/movie:/movie
+    depends_on:
+      - service.jackett
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  service.flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: always
+    ports:
+      - 8191:8191
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/Berlin
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  service.qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    container_name: qbittorrent
+    restart: always
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Berlin
+      - WEBUI_PORT=8081
+    volumes:
+      - ./qb_config:/config
+      - /mnt/media/downloads:/downloads
+      - /mnt/media/anime:/anime
+      - /mnt/media/tv:/tv
+      - /mnt/media/movie:/movie
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8081:8081
+    depends_on:
+      - service.jackett
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
