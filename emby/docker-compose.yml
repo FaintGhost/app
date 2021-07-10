@@ -1,0 +1,19 @@
+version: '3'
+services:
+  emby:
+    image: faintghost/emby_crack:latest
+    container_name: emby
+    restart: always
+    network_mode: host
+    privileged: true
+    environment:
+      - UID=0
+      - GID=0
+      - GIDLIST=0
+    volumes:
+      - ./config:/config
+      - /mnt/video:/mnt/video
+    devices:
+      - /dev/dri:/dev/dri
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
