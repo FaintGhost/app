@@ -19,7 +19,6 @@ issue_cert(){
     sed -i "s/example.com/$domain/g" .env
     sed -i "s/sh.acme.autoload.domain=example.com/sh.acme.autoload.domain=$domain/g" docker-compose.yml
     read -p "Please input your email: " email
-    openssl dhparam -out ./conf/dhparam.pem 2048
     docker-compose -f $PWD/docker-compose.yml up -d
     # init acme.sh regist
     docker exec acme.sh --register-account -m $email
@@ -31,3 +30,4 @@ issue_cert(){
 
 init_nginx_config
 issue_cert
+openssl dhparam -out ./conf/dhparam.pem 2048
