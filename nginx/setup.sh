@@ -1,13 +1,12 @@
 #!/bin/bash
 
 init_nginx_config(){
-    echo "init nginx config files"
-    sed -i "s%- ./conf:/etc/nginx%#- ./conf:/etc/nginx%g" docker-compose.yml
-    docker-compose -f ${PWD}/docker-compose.yml run --name=nginx --rm -d nginx
+    echo "初始化 Nginx 配置文件"
+    docker run --name=nginx --rm -d nginx:stable-alpine
     docker cp nginx:/etc/nginx .
     mv nginx conf
-    docker-compose -f ${PWD}/docker-compose.yml down
-    sed -i "s%#- ./conf:/etc/nginx%- ./conf:/etc/nginx%g" docker-compose.yml
+    docker stop nginx
+    echo "----------------------------------------------"
 }
 
 issue_cert(){
@@ -15,7 +14,7 @@ read -p "Pleas input your CF_Token: " cf_token
 read -p "Please input your Account_ID: " account_id
 read -p "Please input your domain(without http): " domain
 read -p "Please input your email: " email
-sed -i "17s/$/\n      - sh.acme.autoload.domain=awyun.top/g" docker-compose.yml
+sed -i "17s/$/\n      - sh.acme.autoload.domain=${domain}/g" docker-compose.yml
 cat>.env<<EOF
 TZ=Europe/Berlin
 CF_Token=${cf_token}
