@@ -15,7 +15,6 @@ services:
       options: 
         max-size: "1g"
     labels:
-      - sh.acme.autoload.domain=example.com
       - com.centurylinklabs.watchtower.enable=true
 
   acme.sh:
