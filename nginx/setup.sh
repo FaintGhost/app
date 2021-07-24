@@ -10,7 +10,7 @@ init_nginx_config(){
 }
 
 issue_cert(){
-read -p "Pleas input your CF_Token: " cf_token
+read -p "Please input your CF_Token: " cf_token
 read -p "Please input your Account_ID: " account_id
 read -p "Please input your domain(without http): " domain
 read -p "Please input your email: " email
