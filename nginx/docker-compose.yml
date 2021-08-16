@@ -13,7 +13,7 @@ services:
     logging: 
       driver: "json-file"
       options: 
-        max-size: "1g"
+        max-size: "5m"
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
