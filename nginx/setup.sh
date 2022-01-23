@@ -1,5 +1,7 @@
 #!/bin/bash
 
+timezone=${cat /etc/timezone}
+
 init_nginx_config(){
     echo "初始化 Nginx 配置文件"
     docker run --name=nginx --rm -d nginx:stable-alpine
@@ -16,7 +18,7 @@ read -p "Please input your domain(without http): " domain
 read -p "Please input your email: " email
 sed -i "17s/$/\n      - sh.acme.autoload.domain=${domain}/g" docker-compose.yml
 cat>.env<<EOF
-TZ=Europe/Berlin
+TZ=${timezone}
 CF_Token=${cf_token}
 CF_Account_ID=${account_id}
 DEPLOY_DOCKER_CONTAINER_LABEL=sh.acme.autoload.domain=${domain}
